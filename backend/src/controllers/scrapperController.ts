@@ -1,10 +1,16 @@
 const express = require("express");
 const routes = express.Router();
+const scrap = require("../services/scrapperService.ts")
 
-routes.get("/scrap", (req, res) => {
-    const body = req.body.teste;
-  res.send("API Express funcionando 🚀"+body);
+routes.get("/api/scrap", async (req, res) => {
+    try {
+        const keyword = req.query.keyword;
+        const result = await scrap(keyword);
+        res.send(result);
+    }
+    catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
-
 
 module.exports = routes;

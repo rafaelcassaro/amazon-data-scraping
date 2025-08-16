@@ -10,11 +10,10 @@ interface Product {
     imgUrl: string
 }
 
-function sleep(ms:number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let html: any = [];
 const list: Product[] = [];
 let counter = 0;
 
@@ -30,10 +29,12 @@ const userAgents = [
     'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36'
 ];
 
-async function scrapeAmazon() {
+async function scrapeAmazon(searchProd: string, attempt = 1, maxAttempts = 30) {
+    const url = `https://www.amazon.com/s?k=${searchProd}`;
+    list.length = 0;
     try {
         const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
-        const response = await axios.get("https://www.amazon.com/s?k=iphone", {
+        const response = await axios.get(url, {
             headers: {
                 'User-Agent': userAgent,
                 "Accept": "*/*",
@@ -50,11 +51,10 @@ async function scrapeAmazon() {
                 "Sec-Ch-device-memory": "8",
                 "Sec-Ch-dpr": "1",
                 "cache-control": "no-cache",
-                'Referer': 'https://www.amazon.com/s?k=iphone'
+                'Referer': url
             }
         });
 
-        html = response.data;
         const dom = new JSDOM(response.data);
         const document = dom.window.document;
         //scrapping data from html
@@ -63,12 +63,13 @@ async function scrapeAmazon() {
         const rating = document.querySelectorAll('i.a-icon-star-mini span.a-icon-alt');
         const imgUrl = document.querySelectorAll('div.a-section.aok-relative.s-image-fixed-height img.s-image');
 
+        console.log("verifing scraping");
+        console.log("title.length: "+title.length );
+        console.log("review.length: "+review.length);
+        console.log("rating.length: "+rating.length);
+        console.log("imgUrl.length: "+imgUrl.length);
 
-        console.log(title.length);
-        console.log(review.length);
-        console.log(rating.length);
-        console.log(imgUrl.length);
-        //console.log(imgUrl[1].getAttribute('src'));
+
         //add scrap result into a variable
         for (let index = 0; index < title.length; index++) {
             //verify if all the scrapping data has all elements
@@ -81,19 +82,19 @@ async function scrapeAmazon() {
                 })
             }
         }
-        list.forEach((item, i) => { console.log("Numeber: " + i + ": " + item.title + item.review + item.rating + item.imgUrl) })
+        
+        counter = 0;
         return JSON.stringify(list);
-
-
-
     } catch (error) {
-        console.error("Erro ao tentar scrapear:", error.message);
-        console.log(counter);
-        counter++;
-        //try another time to request from amazon recursivily
-        await sleep(600);
-        return scrapeAmazon();
-
+        if (attempt < maxAttempts) {
+            counter++;
+            console.log("Try number: " + counter);
+            //try another time to request from amazon recursivily
+            await sleep(210);
+            return scrapeAmazon(url, attempt + 1, maxAttempts);
+        } else {
+            throw new Error(`Request to amazon has failed after ${counter} tries.`);
+        }
     };
 }
 
