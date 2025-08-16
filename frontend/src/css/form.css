@@ -1,0 +1,35 @@
+.form{
+    text-align: center;
+}
+
+.form h1{
+    font-size: 3rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+}
+
+
+.text_field input{
+    background-color: #FFF;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
+    font-size: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 10px 0;
+}
+
+.text_field button{
+    margin-left: 16px;
+    background-color: rgba(66, 173, 202, 0.644);
+    font-size: 20px;
+    border: 1px solid;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 19px;
+    cursor: pointer;
+
+}
+
+.text_field button:hover{
+    background-color: rgb(66, 173, 202); 
+}

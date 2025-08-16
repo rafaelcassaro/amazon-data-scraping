@@ -5,21 +5,33 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite App</title>
+  <title>Amazon WebScrap</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <section className="form">
+  <section class="form">
     <h1>Search a country</h1>
-    <div className='text_field'>
-      <form onSubmit={applySearch}>
-        <input type='text' placeholder='Type a country' value={search} onChange={handleInput} />
+    <div class='text_field'>
+      <form>
+        <input type='text' placeholder='Type a product'/>
         <button>Search</button>
       </form>
     </div>
   </section>
-</body>
+  <hr>
+  <section>
+    <div class='card'>
+      <div class='card_content'>
+        <img src="https://m.media-amazon.com/images/I/51H8+zCj2cL._AC_UY218_.jpg" />
+        <h2>Apple iPhone 16e, 128GB, eSIM, Black - Unlocked (Renewed)</h2>
+        <h2>4.4 out of 5 stars</h2>
+        <h2>62</h2>
+      </div>
+    </div>
+    
+  </section>
 
+</body>
 </html>
