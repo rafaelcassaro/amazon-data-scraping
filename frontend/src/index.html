@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <section className="form">
+    <h1>Search a country</h1>
+    <div className='text_field'>
+      <form onSubmit={applySearch}>
+        <input type='text' placeholder='Type a country' value={search} onChange={handleInput} />
+        <button>Search</button>
+      </form>
+    </div>
+  </section>
+</body>
+
+</html>
