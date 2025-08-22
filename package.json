@@ -1,0 +1,6 @@
+{
+  "name": "fullstack-app",
+  "scripts": {
+    "dev": "bun start.ts"
+  }
+}
